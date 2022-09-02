@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+
 class TemparatureSerializer(serializers.Serializer):
     '''Temparature data serializer calss'''
     city = serializers.CharField(
@@ -7,11 +8,10 @@ class TemparatureSerializer(serializers.Serializer):
         required=True,
         allow_null=False,
     )
-    
+
     number_of_days = serializers.IntegerField(
-        min=0,
-        max=10,
+        min_value=1,
+        max_value=10,
         required=True,
         allow_null=False,
     )
-    
