@@ -19,7 +19,8 @@ class TestWeatherStats(APITestCase):
                                 kwargs={"city": "Nairobi"})
         self.days_query_params = {'number_of_days': 2}
         self.sample_weather_api_repsonse = ''
-        with open('app/api/MockData/weather_api_reponse.json', 'r') as sample_response_file:
+        with open('app/api/MockData/weather_api_reponse.json', 'r') \
+                as sample_response_file:
             self.sample_weather_api_repsonse = json.loads(
                 sample_response_file.read())
 

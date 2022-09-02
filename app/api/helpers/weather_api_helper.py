@@ -42,7 +42,9 @@ def get_temperature_data(city, days):
         "maximum": round(max(temparature_list), 2),
         "minimum": round(min(temparature_list), 2),
         "average": round(sum(temparature_list) / len(temparature_list), 2),
-        "median": round(sorted(temparature_list)[len(temparature_list) // 2], 2),
+        "median": round(
+            sorted(temparature_list)[len(temparature_list) // 2], 2
+        ),
     }
 
     return temparature_data
