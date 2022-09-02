@@ -5,6 +5,14 @@ from rest_framework.serializers import ValidationError
 
 
 def get_weather_stats(city, days):
+    '''
+    helper to call the weather api
+    Args:
+        days: (int) number of days in future to check
+        city: (str) city name
+    Returns:
+        (dict) dictionary object contatining values returned from weather api
+    '''
     base_url = 'https://api.weatherapi.com/v1/forecast.json?key'
     url = f'{base_url}={settings.WEATHER_API_KEY}&q={city}&days={days}'
     response = requests.get(url)
@@ -15,18 +23,26 @@ def get_weather_stats(city, days):
 
 
 def get_temperature_data(city, days):
+    '''
+    helper to calculate temparature data
+    Args:
+        days: (int) number of days in future to check
+        city: (str) city name
+    Returns:
+        (dict) dictionary object contatining temparature data
+    '''
     weather_data = get_weather_stats(city, days)
     data_per_day = weather_data.get('forecast', {}).get('forecastday')
     temparature_list = []
     for day in data_per_day:
         for hourly_forecast in day.get('hour', {}):
             temparature_list.append(hourly_forecast.get('temp_c'))
-            
+
     temparature_data = {
         "maximum": round(max(temparature_list), 2),
         "minimum": round(min(temparature_list), 2),
         "average": round(sum(temparature_list) / len(temparature_list), 2),
         "median": round(sorted(temparature_list)[len(temparature_list) // 2], 2),
-
     }
+
     return temparature_data
