@@ -11,19 +11,18 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-xqib+u!4hs!qp9c*434k2tv0r6kczc_!yneycoi71+wo!y#shp'
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', True)
+
+WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY', '')
 
 ALLOWED_HOSTS = []
 
@@ -37,6 +36,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    'rest_framework',
+    'drf_yasg2',
+    
+    'app.api'
 ]
 
 MIDDLEWARE = [
@@ -50,6 +54,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'app.urls'
+
+# DRF
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'app.core.exception_handler.core_exception_handler',
+    'NON_FIELD_ERRORS_KEY': 'error',
+}
 
 TEMPLATES = [
     {
